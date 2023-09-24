@@ -9,8 +9,8 @@ class Pessoa(AbstractPessoa, ABC):
 
     @property
     def codigo(self) -> int:
-    	return self.__codigo
-    
+        return self.__codigo
+
     @property
     def nome(self) -> str:
         return self.__nome
