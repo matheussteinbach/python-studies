@@ -10,7 +10,6 @@ from collections import defaultdict
 class ControladorChamados(AbstractControladorChamados):
     def __init__(self):
         self.__chamados = []
-        self.__tipos = []
         self.__tipos_chamados = []
 
     @property
