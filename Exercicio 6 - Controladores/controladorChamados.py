@@ -16,10 +16,9 @@ class ControladorChamados(AbstractControladorChamados):
     def chamados(self) -> list:
         return self.__chamados
 
-    # Retorna os tipos de chamado que foram cadastrados no controlador pelo metodo inclui_tipochamado
-    @property	
+    @property
     def tipos_chamados(self):
-	    return self.__tipos_chamados
+        return self.__tipos_chamados
 
     def total_chamados_por_tipo(self, tipo: TipoChamado) -> int:
         chamados_por_tipo = 0
@@ -27,28 +26,24 @@ class ControladorChamados(AbstractControladorChamados):
             if chamado.tipo == tipo:
                 chamados_por_tipo += 1
         return chamados_por_tipo
-    
-    def inclui_chamado(
-                self, 
-                data: Date, 
-                cliente: Cliente, 
-                tecnico: Tecnico, 
-                titulo: str, 
-                descricao: str, 
-                prioridade: int, 
-                tipo: TipoChamado) -> Chamado:
-        chamado = Chamado(data, cliente, tecnico, titulo, descricao, prioridade, tipo)
-        datas = [chamados.data for chamados in self.chamados]
-        clientes = [chamados.cliente for chamados in self.chamados]
-        tecnicos = [chamados.tecnico for chamados in self.chamados]
-        tipos = [chamados.tipo for chamados in self.chamados]
-        if chamado not in datas and clientes and tecnicos and tipos:
-            self.__chamados.append(chamado)
-            return(chamado)
 
-    def inclui_tipochamado(self, codigo: int, nome: str, descricao: str) -> TipoChamado:
+    def inclui_chamado(
+            self, data: Date, cliente: Cliente, tecnico: Tecnico,
+            titulo: str, descricao: str, prioridade: int,
+            tipo: TipoChamado) -> Chamado:
+        if isinstance(cliente, Cliente) and isinstance(tecnico, Tecnico) and\
+                isinstance(tipo, TipoChamado):
+            novo_chamado = Chamado(
+                data, cliente, tecnico, titulo, descricao, prioridade, tipo)
+            identificadores = [
+                chamado.identificador for chamado in self.chamados]
+            if novo_chamado.identificador not in identificadores:
+                self.__chamados.append(novo_chamado)
+
+    def inclui_tipochamado(
+            self, codigo: int, nome: str, descricao: str) -> TipoChamado:
         tipochamado = TipoChamado(codigo, descricao, nome)
         identificadores = [tipos.codigo for tipos in self.tipos_chamados]
         if codigo not in identificadores:
             self.__tipos_chamados.append(tipochamado)
-            return tipochamado
+        return tipochamado
