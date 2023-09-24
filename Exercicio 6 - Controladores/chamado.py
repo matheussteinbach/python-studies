@@ -17,8 +17,8 @@ class Chamado(AbstractChamado):
             tipo: TipoChamado):
         if isinstance(data, Date) and isinstance(cliente, Cliente) and\
                 isinstance(tecnico, Tecnico) and isinstance(titulo, str) and\
-				isinstance(descricao, str) and isinstance(prioridade, int) and\
-				isinstance(tipo, TipoChamado):
+                isinstance(descricao, str) and isinstance(prioridade, int) and\
+                isinstance(tipo, TipoChamado):
             self.__data = data
             self.__cliente = cliente
             self.__tecnico = tecnico
@@ -26,8 +26,7 @@ class Chamado(AbstractChamado):
             self.__descricao = descricao
             self.__prioridade = prioridade
             self.__tipo = tipo
-        
-    
+
     @property
     def cliente(self) -> Cliente:
         return self.__cliente
@@ -55,3 +54,7 @@ class Chamado(AbstractChamado):
     @property
     def titulo(self) -> str:
         return self.__titulo
+
+    @property
+    def identificador(self):
+        return f'{self.data}{self.cliente}{self.tecnico}{self.tipo}'
